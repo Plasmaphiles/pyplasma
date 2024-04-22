@@ -23,15 +23,18 @@ class Blueprint:
 
 		return md5.hexdigest()
 
+def appdir() -> str:
+	return os.getenv('APPDATA') + '\\..\\LocalLow\\DryLicorice\\Plasma\\User Data'
+
 def devices() -> Generator[Blueprint, None, None]:
-	for file in Path(os.getenv('APPDATA') + '\\..\\LocalLow\\DryLicorice\\Plasma\\User Data\\Devices').iterdir():
+	for file in Path(appdir() + '\\Devices').iterdir():
 		if file.suffix == '.metadata':
 			device = Blueprint(file)
 			if device.name:
 				yield device
 
 def worlds() -> Generator[Blueprint, None, None]:
-	for file in Path(os.getenv('APPDATA') + '\\..\\LocalLow\\DryLicorice\\Plasma\\User Data\\Worlds').iterdir():
+	for file in Path(appdir() + '\\Worlds').iterdir():
 		if file.suffix == '.metadata':
 			device = Blueprint(file)
 			if device.name:
